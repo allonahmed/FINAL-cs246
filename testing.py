@@ -2,11 +2,11 @@ import requests, json
 
 url = 'http://192.168.1.7:8080'
 
-key = 'allon'
+key = 'alln'
 
 file = {'file':open('temp.txt','r')}
 
-filename = "assignment2"
+filename = "assignment33"
 
 #registers user using the key
 register = requests.get(url+"/register/{}".format(key))
@@ -25,7 +25,7 @@ elif upload.status_code==403:
   print("You're key cannot be found in the server. ERROR 403")
 
 #prints all the files that have been added to user's server
-filelist = requests.get('https://finalprojectCS265.allonahmed2.repl.co/files', headers={'api-key': key})
+filelist = requests.get(url + '/files', headers={'api-key': key})
 
 print("list of files: ", json.loads(filelist.content)["data"])
 
@@ -41,23 +41,23 @@ elif getFile.status_code==403:
 
 # delete a file
 
-df = requests.get(url+"/delete/{}".format(filename), headers={'api-key': key})
-if df.status_code==200:
-  print("YOu have successfully deleted file {}".format(filename))
-elif df.status_code==403:
-  print("We could not find the file with that name in your folder. ERROR 403")
+# df = requests.get(url+"/delete/{}".format(filename), headers={'api-key': key})
+# if df.status_code==200:
+#   print("YOu have successfully deleted file {}".format(filename))
+# elif df.status_code==403:
+#   print("We could not find the file with that name in your folder. ERROR 403")
 
-filelist = requests.get('https://finalprojectCS265.allonahmed2.repl.co/files', headers={'api-key': key})
+# filelist = requests.get(url + '/files', headers={'api-key': key})
 
-print("list of files after deletion: ", json.loads(filelist.content)["data"])
+# print("list of files after deletion: ", json.loads(filelist.content)["data"])
 
-# #unregister user from server
+# # #unregister user from server
 
-rm = requests.get(url+"/removeuser/{}".format(key), headers={"api-key": key})
-if rm.status_code==200:
-  print("{} was successfully deregisted from our service".format(key))
-else:
-  print("User does not exist in server! ERROR 403")
+# rm = requests.get(url+"/removeuser/{}".format(key), headers={"api-key": key})
+# if rm.status_code==200:
+#   print("{} was successfully deregisted from our service".format(key))
+# else:
+#   print("User does not exist in server! ERROR 403")
 
 
 

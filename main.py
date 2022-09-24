@@ -1,21 +1,24 @@
 import boto3
 from flask import Flask, request, Response, jsonify, render_template
+from dotenv import load_dotenv
 import json
 import os
 
 app = Flask(__name__)
+load_dotenv()
 
 #global parameters
 
-PUBLIC_KEY= "ASIAQCZUUQHO5QPYJPOQ"
-SECRET_KEY= "QF9nvgdUSdnBa8EzlwZBmIRZIHaaf4NQwH7yWRqc"
-BUCKET = 'cs265allon'
+
+BUCKET = 'file-server-ahmed'
 AWSclient = boto3.client( #s3 kkey id and access key
     's3',
     aws_access_key_id=PUBLIC_KEY,
     aws_secret_access_key=SECRET_KEY,
-    aws_session_token="FwoGZXIvYXdzEHIaDIUx69vedUWmArAxTyLFAaL2baIegNymiXHPnWDYopHe7m39740pErSi2l3Q3sSn8z3y/ivXZREtRGipjNtN42Z1hDI1nI+dksGiH7qH8IBt2uqAYV8zn88Tl1bP24abro/EkOiwbkl0Ly3CMrlUE8eg5nUCfehiamxHwHC9096P5EbeHbZEpQXuI1vrOo0HV3vyVEIaldTtkqUQZPu3rWw+wgWVMqdlykTCXnBaIYnhVZPgtWAg3nVqRVDlFkbDw2Fmz0bKFlR9JBtC2CnezMCVLQYHKLe45f4FMi2Jfxk6ntsm5Mj+Oz3kTJ71O/+r2Ep2mLp5Nk/nInmpilz+ey1QPtdOVVWmbkg=",
+    # aws_session_token="FwoGZXIvYXdzEHIaDIUx69vedUWmArAxTyLFAaL2baIegNymiXHPnWDYopHe7m39740pErSi2l3Q3sSn8z3y/ivXZREtRGipjNtN42Z1hDI1nI+dksGiH7qH8IBt2uqAYV8zn88Tl1bP24abro/EkOiwbkl0Ly3CMrlUE8eg5nUCfehiamxHwHC9096P5EbeHbZEpQXuI1vrOo0HV3vyVEIaldTtkqUQZPu3rWw+wgWVMqdlykTCXnBaIYnhVZPgtWAg3nVqRVDlFkbDw2Fmz0bKFlR9JBtC2CnezMCVLQYHKLe45f4FMi2Jfxk6ntsm5Mj+Oz3kTJ71O/+r2Ep2mLp5Nk/nInmpilz+ey1QPtdOVVWmbkg=",
 )   
+
+print(os.getenv('PUBLIC_KEY'))
 
 
 @app.route('/')
