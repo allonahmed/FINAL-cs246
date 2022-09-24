@@ -1,9 +1,20 @@
-from flask import render_template, Response
+from flask import render_template, Response, request, jsonify
 import json
+import boto3
 import os
+import logging
+
 
 
 folder = json.load(open("./folder.json")) 
+
+AWSclient = boto3.client( #s3 kkey id and access key
+    's3',
+    aws_access_key_id=os.getenv('ACCESS_KEY_ID'),
+    aws_secret_access_key=os.getenv('SECRET_ACCESS_KEY'),
+    aws_session_token="FwoGZXIvYXdzEHIaDIUx69vedUWmArAxTyLFAaL2baIegNymiXHPnWDYopHe7m39740pErSi2l3Q3sSn8z3y/ivXZREtRGipjNtN42Z1hDI1nI+dksGiH7qH8IBt2uqAYV8zn88Tl1bP24abro/EkOiwbkl0Ly3CMrlUE8eg5nUCfehiamxHwHC9096P5EbeHbZEpQXuI1vrOo0HV3vyVEIaldTtkqUQZPu3rWw+wgWVMqdlykTCXnBaIYnhVZPgtWAg3nVqRVDlFkbDw2Fmz0bKFlR9JBtC2CnezMCVLQYHKLe45f4FMi2Jfxk6ntsm5Mj+Oz3kTJ71O/+r2Ep2mLp5Nk/nInmpilz+ey1QPtdOVVWmbkg=",
+
+)  
 
 def home(): # home page
   return render_template('main.html')
@@ -19,9 +30,13 @@ def register(apikey):
         return Response(status=403, response={ 'message': 'user already exist'}) # if the apikey found, in user, you do not need to register again.
 
 def upload(filename):
+    logging.warning('running upload func')
+    logging.warning(os.getenv('ACCESS_KEY_ID'))
+    logging.warning(os.getenv('SECRET_ACCESS_KEY'))
     filename = str(filename) #converts file to a string
     file = request.files['file'] # gets the data from file from post requests
     apikey = request.headers.get('api-key') # requests for the apikey
+    logging.warning(apikey)
     if(apikey in folder):
         if(filename in folder[apikey]):
             #if user already have a file with the same name
@@ -29,7 +44,7 @@ def upload(filename):
         folder[apikey].append(filename)
         updatefolderFile(folder)
         updatetmp(file)
-        AWSclient.upload_file('temp.txt', BUCKET, filename)
+        AWSclient.upload_file('temp.txt', os.getenv('BUCKET'), filename)
         return Response(status=200)
     else:
         return Response(status=403)
