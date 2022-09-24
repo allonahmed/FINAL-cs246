@@ -1,5 +1,5 @@
 import boto3
-from flask import Flask,request,Response,jsonify
+from flask import Flask, request, Response, jsonify, render_template
 import json
 import os
 
@@ -20,7 +20,7 @@ AWSclient = boto3.client( #s3 kkey id and access key
 
 @app.route('/')
 def home(): # home page
-  return "<h1 color=`red`>WELCOME TO MY API SERVER</h1>"
+  return render_template('main.html')
 
 #this makes a new user
 @app.route('/register/<apikey>') 
@@ -127,5 +127,5 @@ def updatetmp(file):
 
 if __name__ == "__main__":
     folder = json.load(open("folder.json")) 
-    app.run(host = '0.0.0.0',debug=True)
+    app.run(host = '0.0.0.0',port=8080, debug=True)
 

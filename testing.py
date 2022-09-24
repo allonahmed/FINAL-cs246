@@ -1,6 +1,6 @@
 import requests, json
 
-url = 'https://finalprojectCS265.allonahmed2.repl.co'
+url = 'http://192.168.1.7:8080'
 
 key = 'allon'
 
