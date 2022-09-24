@@ -2,7 +2,7 @@ import requests, json
 
 url = 'http://192.168.1.7:8080'
 
-key = 'alln'
+key = 'new user123'
 
 file = {'file':open('temp.txt','r')}
 
@@ -16,28 +16,28 @@ else:
   print('It seems you are already a member. Start adding files to the server!')
 
 #uploads the file using the filename and file url to aws
-upload = requests.post(url+"/upload/{}".format(filename), files = file, headers={'api-key': key})
-if upload.status_code==200:
-  print("We have successfully added your file to the server!")
-elif upload.status_code==400:
-  print('You already have a file with the same name in the server! ERROR 400')
-elif upload.status_code==403:
-  print("You're key cannot be found in the server. ERROR 403")
+# upload = requests.post(url+"/upload/{}".format(filename), files = file, headers={'api-key': key})
+# if upload.status_code==200:
+#   print("We have successfully added your file to the server!")
+# elif upload.status_code==400:
+#   print('You already have a file with the same name in the server! ERROR 400')
+# elif upload.status_code==403:
+#   print("You're key cannot be found in the server. ERROR 403")
 
-#prints all the files that have been added to user's server
-filelist = requests.get(url + '/files', headers={'api-key': key})
+# #prints all the files that have been added to user's server
+# filelist = requests.get(url + '/files', headers={'api-key': key})
 
-print("list of files: ", json.loads(filelist.content)["data"])
+# print("list of files: ", json.loads(filelist.content)["data"])
 
-#returns the file contents that was saved on ASW
+# #returns the file contents that was saved on ASW
 
-getFile = requests.get(url+'/files/{}'.format(filename), headers = {'api-key': key})
-if getFile.status_code==200:
-  print("{} :".format(filename), getFile.content.decode('utf-8'))
-elif getFile.status_code==404:
-  print('filename is not in the server. ERROR 404')
-elif getFile.status_code==403:
-  print('your key is invalid. ERROR 403')
+# getFile = requests.get(url+'/files/{}'.format(filename), headers = {'api-key': key})
+# if getFile.status_code==200:
+#   print("{} :".format(filename), getFile.content.decode('utf-8'))
+# elif getFile.status_code==404:
+#   print('filename is not in the server. ERROR 404')
+# elif getFile.status_code==403:
+#   print('your key is invalid. ERROR 403')
 
 # delete a file
 
