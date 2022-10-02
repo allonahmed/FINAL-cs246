@@ -31,8 +31,6 @@ def register(apikey):
 
 def upload(filename):
     logging.warning('running upload func')
-    logging.warning(os.getenv('ACCESS_KEY_ID'))
-    logging.warning(os.getenv('SECRET_ACCESS_KEY'))
     filename = str(filename) #converts file to a string
     file = request.files['file'] # gets the data from file from post requests
     apikey = request.headers.get('api-key') # requests for the apikey
